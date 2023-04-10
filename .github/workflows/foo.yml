@@ -1,0 +1,19 @@
+name: farts
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_ref:
+        type: string
+        default: "foo
+
+jobs:
+  base-image:
+    runs-on: macos-12
+    steps:
+	  - name: Test foo ${{ inputs.build_ref || '${GITHUB_REF_NAME}' }}
+		run: env
+
+      - name: Test direct env var ${GITHUB_REF_NAME}
+		run: env
+

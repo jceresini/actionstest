@@ -11,9 +11,9 @@ jobs:
   base-image:
     runs-on: macos-12
     steps:
-      - name: "Test foo ${{ inputs.build_ref || '${GITHUB_REF_NAME}' }}"
+      - name: Test foo (${{ github.ref }})
         run: env
 
-      - name: "Test direct env var ${GITHUB_REF_NAME}"
+      - name: Checkout branch we're building (${{ inputs.build_ref }})
         run: env
 

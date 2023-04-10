@@ -5,7 +5,7 @@ on:
     inputs:
       build_ref:
         type: string
-        default: "foo
+        default: "foo"
 
 jobs:
   base-image:

@@ -1,4 +1,4 @@
-name: farts
+name: foo
 
 on:
   workflow_dispatch:

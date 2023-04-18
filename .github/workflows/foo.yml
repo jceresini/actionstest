@@ -11,9 +11,5 @@ jobs:
   base-image:
     runs-on: macos-12
     steps:
-      - name: Test foo (${{ github.ref }})
-        run: env
-
-      - name: Checkout branch we're building (${{ inputs.build_ref }})
-        run: env
-
+      - name: Test macos date
+        run: "date -u +%Y-%m-%dT%H:%M:%SZ"

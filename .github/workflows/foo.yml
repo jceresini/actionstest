@@ -1,15 +1,36 @@
-name: foo
+name: JOETEST
 
-on:
-  workflow_dispatch:
-    inputs:
-      build_ref:
-        type: string
-        default: "foo"
+on: [push]
+
+env:
+  GITHUB_API_TOKEN: ${{ secrets.SOME_SECRET }}
 
 jobs:
-  base-image:
-    runs-on: macos-12
+  build:
+
+    runs-on: ubuntu-latest
+
     steps:
-      - name: Test macos date
-        run: "date -u +%Y-%m-%dT%H:%M:%SZ"
+
+
+      - id: files
+        name: Collect changed files
+        uses: jitterbit/get-changed-files@v1
+        # this step can error but still collect files
+        continue-on-error: true
+
+      - run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            echo "Do something with this ${changed_file}."
+          done
+
+      - name: Changed Files
+        id: changed-files
+        uses: masesgroup/retrieve-changed-files@v2
+
+
+      - run: |
+          for file in ${{ steps.changed-files.outputs.all }}; do
+            echo "Do something with this ${file}."
+          done
+

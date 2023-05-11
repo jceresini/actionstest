@@ -7,9 +7,6 @@ cur = repo.remote().repo.commit("origin/main")
 last = repo.commit("main")
 
 x = cur.tree.blobs[0]
-print(x.path)
-
-exit()
 
 print(cur, "..", last)
 

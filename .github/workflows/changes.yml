@@ -1,6 +1,6 @@
 name: changed_files_composite
 
-on: [pull]
+on: [pull_request]
 
 jobs:
   build:

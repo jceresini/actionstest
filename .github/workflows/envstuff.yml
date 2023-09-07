@@ -9,12 +9,11 @@ jobs:
   env-test:
     runs-on: ubuntu-latest
 
-  steps:
-    - name: env test
-      env:
-        PR_TITLE: ${{ github.event.pull_request.title }}
-      shell: bash
-      run: |
-        echo "The workflow env value is: $PR_TITLE"
-        echo "The expanded context value is: ${{ github.event.pull_request.title }}"
-
+    steps:
+      - name: env test
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        shell: bash
+        run: |
+          echo "The workflow env value is: $PR_TITLE"
+          echo "The expanded context value is: ${{ github.event.pull_request.title }}"

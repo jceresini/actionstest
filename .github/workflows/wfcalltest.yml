@@ -1,0 +1,25 @@
+---
+name: "Workflow call test"
+
+on:
+  workflow_call:
+    inputs:
+      pr_title:
+        required: true
+        type: string
+
+jobs:
+  env-test-wfc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: env test
+        env:
+          PR_TITLE: ${{ input.pr_title }}
+          EVENT_TITLE: ${{ github.event.pull_request.title }}
+        shell: bash
+        run: |
+          echo "The workflow env value is: $PR_TITLE"
+          echo "The expanded input value is: ${{ input.pr_title }}"
+          echo "The workflow env value is: $EVENT_TITLE"
+          echo "The expanded context value is: ${{ github.event.pull_request.title }}"

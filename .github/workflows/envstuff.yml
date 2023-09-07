@@ -17,3 +17,8 @@ jobs:
         run: |
           echo "The workflow env value is: $PR_TITLE"
           echo "The expanded context value is: ${{ github.event.pull_request.title }}"
+
+      - name: wfcall test
+        uses: ./.github/workflows/wfcalltest.yml
+        with:
+          pr_title: ${{ github.event.pull_request.title }}

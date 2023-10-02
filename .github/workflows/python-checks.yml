@@ -24,8 +24,8 @@ jobs:
       - name: Are python checks required
         run: |
           echo "Testing..."
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            for pattern in ${{ env.file_patterns }}; do
+          for file in "${{ steps.changed-files.outputs.all_changed_files }}"; do
+            for pattern in "${{ env.file_patterns }}"; do
               if [[ "$file" == $x ]]; then echo "$file matches $x"; else echo "$file DOES NOT match $x"; fi
             done
           done

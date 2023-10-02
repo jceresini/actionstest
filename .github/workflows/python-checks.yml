@@ -24,9 +24,15 @@ jobs:
         uses: tj-actions/changed-files@a0585ff9904b77d046192a7846e59783d6ea287b
       - name: Are python checks required
         run: |
-          echo "Testing..."
+          FOUND_MATCH=false
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             for pattern in $PYTHON_FILE_PATTERNS; do
-              if [[ "$file" == $pattern ]]; then echo "$file matches $pattern"; else echo "$file DOES NOT match $pattern"; fi
+              if [[ "$file" == $pattern ]]; then
+                echo "$file matches $pattern"
+                FOUND_MATCH=true
+                break 2
+              else
+                echo "$file DOES NOT match $pattern"
+              fi
             done
           done

@@ -28,7 +28,6 @@ jobs:
             *.py
             pytest.txt
             Conf/scripts/sshgw
-        pass
         run: |
           echo "Testing..."
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do

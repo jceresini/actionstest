@@ -36,3 +36,4 @@ jobs:
               fi
             done
           done
+          echo "Found match = $FOUND_MATCH"

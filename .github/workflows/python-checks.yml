@@ -15,7 +15,11 @@ jobs:
   python_checks_required:
     name: Determine if python checks are required
     runs-on: ubuntu-latest
-
+    with:
+      python_file_patterns: |
+        *.py
+        pytests.txt
+        Conf/scripts/sshgw
     steps:
       - name: Get PR changes
         id: changed-files
@@ -25,12 +29,7 @@ jobs:
         run: |
           echo "Testing..."
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            for pattern in "${{ env.file_patterns }}"; do
+            for pattern in ${{ input.python_file_patterns }}; do
               if [[ "$file" == $pattern ]]; then echo "$file matches $pattern"; else echo "$file DOES NOT match $pattern"; fi
             done
           done
-        env:
-          file_patterns: |
-            *.py
-            pytest.txt
-            Conf/scripts/sshgw

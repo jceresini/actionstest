@@ -1,0 +1,30 @@
+name: pylint-test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  merge_group:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+
+  python_checks_required:
+    name: Determine if python checks are required
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get PR changes
+        id: changed-files
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: tj-actions/changed-files@a0585ff9904b77d046192a7846e59783d6ea287b
+      - name: Are python checks required
+        run: |
+          echo "Testing..."
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done

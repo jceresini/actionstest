@@ -16,7 +16,7 @@ jobs:
     name: Determine if python checks are required
     runs-on: ubuntu-latest
     env:
-      PYTHON_FILE_PATTERNS: *.py pytests.txt Conf/scripts/sshgw
+      PYTHON_FILE_PATTERNS: "*.py pytests.txt Conf/scripts/sshgw"
     steps:
       - name: Get PR changes
         id: changed-files

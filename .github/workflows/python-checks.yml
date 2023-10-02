@@ -23,8 +23,16 @@ jobs:
         if: ${{ github.event_name == 'pull_request' }}
         uses: tj-actions/changed-files@a0585ff9904b77d046192a7846e59783d6ea287b
       - name: Are python checks required
+        with:
+          file_patterns: |
+            *.py
+            pytest.txt
+            Conf/scripts/sshgw
+        pass
         run: |
           echo "Testing..."
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+            for pattern in ${{ input.file_patterns }}; do
+              if [[ "$file" == $x ]]; then echo "$file matches $x"; else echo "$file DOES NOT match $x"; fi
+            done
           done

@@ -2,35 +2,19 @@ name: JOETEST
 
 on: [push]
 
-env:
-  GITHUB_API_TOKEN: ${{ secrets.SOME_SECRET }}
-
 jobs:
   build:
 
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read  # This is required for actions/checkout
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
 
-
-      - id: files
-        name: Collect changed files
-        uses: jitterbit/get-changed-files@v1
-        # this step can error but still collect files
-        continue-on-error: true
-
-      - run: |
-          for changed_file in ${{ steps.files.outputs.all }}; do
-            echo "Do something with this ${changed_file}."
-          done
-
-      - name: Changed Files
-        id: changed-files
-        uses: jceresini/get-changed-files@v1
-
-
-      - run: |
-          for file in ${{ steps.changed-files.outputs.all }}; do
-            echo "Do something with this ${file}."
-          done
-
+      - uses: AviatrixTemplates/build-artifact-storage/upload@main
+        with:
+          file: debhelper_13.11.6_all.deb
+          name: test_artifact
+          verion: 1.2.3

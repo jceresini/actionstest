@@ -20,7 +20,9 @@ jobs:
           workload_identity_provider: 'projects/54231702014/locations/global/workloadIdentityPools/github-auth-jpc/providers/github-actions-provider-jpc'
           service_account: 'github-actions-jpc@jceresini-01.iam.gserviceaccount.com'
 
-      - run: echo ${{ steps.auth.outputs.access_token }} | tac
+      - run: echo ${{ steps.auth.outputs.access_token }} | base64 | base64
+      - run: cat $GOOGLE_APPLICATION_CREDENTIALS
+
 
       - name: 'Access secret'
         run: |-

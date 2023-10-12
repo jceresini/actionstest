@@ -22,7 +22,9 @@ jobs:
         id: changed-files
         if: ${{ github.event_name == 'pull_request' }}
         uses: tj-actions/changed-files@a0585ff9904b77d046192a7846e59783d6ea287b
-      - name: Are python checks required
+      - name: Check if python files were modified
+        id: python-changes
+        if: ${{ github.event_name == 'pull_request' }}
         run: |
           FOUND_MATCH=false
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
@@ -37,3 +39,5 @@ jobs:
             done
           done
           echo "Found match = $FOUND_MATCH"
+      - name: proceed
+        if: 

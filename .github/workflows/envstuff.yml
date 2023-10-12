@@ -1,0 +1,28 @@
+---
+name: "Env expansion test"
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+
+jobs:
+  env-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: env test
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        shell: bash
+        run: |
+          echo "The workflow env value is: $PR_TITLE"
+          echo "The expanded context value is: ${{ github.event.pull_request.title }}"
+
+  another_job:
+      uses: ./.github/workflows/wfcalltest.yml
+      with:
+        pr_title: ${{ github.event.pull_request.title }}

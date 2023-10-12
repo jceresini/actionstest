@@ -1,0 +1,43 @@
+name: pylint-test
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  merge_group:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  python_checks_required:
+    name: Determine if python checks are required
+    runs-on: ubuntu-latest
+    env:
+      PYTHON_FILE_PATTERNS: "*.py pytests.txt Conf/scripts/sshgw"
+    steps:
+      - name: Get PR changes
+        id: changed-files
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: tj-actions/changed-files@a0585ff9904b77d046192a7846e59783d6ea287b
+      - name: Check if python files were modified
+        id: python-changes
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          FOUND_MATCH=false
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            for pattern in $PYTHON_FILE_PATTERNS; do
+              if [[ "$file" == $pattern ]]; then
+                echo "$file matches $pattern"
+                FOUND_MATCH=true
+                break 2
+              else
+                echo "$file DOES NOT match $pattern"
+              fi
+            done
+          done
+          echo "Found match = $FOUND_MATCH"
+      - name: proceed
+        if: 
